@@ -1,73 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Login & Register</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login & Register</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <form id="loginForm">
-            <label for="loginUsername">Username:</label>
-            <input type="text" id="loginUsername" required />
-            <label for="loginPassword">Password:</label>
-            <input type="password" id="loginPassword" required />
-            <button type="submit">Login</button>
-        </form>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <label for="loginUsername">Username:</label>
+      <input type="text" id="loginUsername" required />
+      <label for="loginPassword">Password:</label>
+      <input type="password" id="loginPassword" required />
+      <button type="submit">Login</button>
+    </form>
 
-        <h2>Register</h2>
-        <form id="registerForm">
-            <label for="registerUsername">Username:</label>
-            <input type="text" id="registerUsername" required />
-            <label for="registerPassword">Password:</label>
-            <input type="password" id="registerPassword" required />
-            <button type="submit">Register</button>
-        </form>
+    <h2>Register</h2>
+    <form id="registerForm">
+      <label for="registerUsername">Username:</label>
+      <input type="text" id="registerUsername" required />
+      <label for="registerPassword">Password:</label>
+      <input type="password" id="registerPassword" required />
+      <button type="submit">Register</button>
+    </form>
 
-        <p id="message"></p>
-    </div>
+    <p id="message"></p>
+  </div>
 
-    <script>
-        // Users stored in browser memory (reset on page reload)
-        const users = {};
+  <script>
+    // Load users from localStorage or initialize as empty object
+    let users = JSON.parse(localStorage.getItem("users")) || {};
 
-        const loginForm = document.getElementById('loginForm');
-        const registerForm = document.getElementById('registerForm');
-        const message = document.getElementById('message');
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+    const message = document.getElementById("message");
 
-        registerForm.addEventListener('submit', e => {
-            e.preventDefault();
-            const username = registerForm.registerUsername.value.trim();
-            const password = registerForm.registerPassword.value.trim();
+    registerForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = registerForm.registerUsername.value.trim();
+      const password = registerForm.registerPassword.value.trim();
 
-            if (users[username]) {
-                message.style.color = 'red';
-                message.textContent = 'Username already exists!';
-                return;
-            }
+      if (users[username]) {
+        message.style.color = "red";
+        message.textContent = "Username already exists!";
+        return;
+      }
 
-            users[username] = password;
-            message.style.color = 'green';
-            message.textContent = `User "${username}" registered successfully!`;
-            registerForm.reset();
-        });
+      users[username] = password;
+      localStorage.setItem("users", JSON.stringify(users));
 
-        loginForm.addEventListener('submit', e => {
-            e.preventDefault();
-            const username = loginForm.loginUsername.value.trim();
-            const password = loginForm.loginPassword.value.trim();
+      message.style.color = "green";
+      message.textContent = `User "${username}" registered successfully!`;
+      registerForm.reset();
+    });
 
-            if (users[username] && users[username] === password) {
-                message.style.color = 'green';
-                message.textContent = `Login successful! Welcome, ${username}.`;
-            } else {
-                message.style.color = 'red';
-                message.textContent = 'Invalid username or password.';
-            }
-        });
-    </script>
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = loginForm.loginUsername.value.trim();
+      const password = loginForm.loginPassword.value.trim();
+
+      if (users[username] && users[username] === password) {
+        message.style.color = "green";
+        message.textContent = `Login successful! Welcome, ${username}.`;
+      } else {
+        message.style.color = "red";
+        message.textContent = "Invalid username or password.";
+      }
+    });
+  </script>
 </body>
 </html>
-
