@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" required />
+            <label for="password">Password:</label>
+            <input type="password" id="password" required />
+            <button type="submit">Login</button>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const message = document.getElementById('message');
+
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = loginForm.username.value;
+            const password = loginForm.password.value;
+
+            // Simple hardcoded login check for demo purposes
+            if (username === 'user' && password === 'password') {
+                message.style.color = 'green';
+                message.textContent = 'Login successful!';
+            } else {
+                message.style.color = 'red';
+                message.textContent = 'Invalid username or password.';
+            }
+        });
+    </script>
+</body>
+</html>
